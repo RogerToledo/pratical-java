@@ -1,0 +1,8 @@
+[Practical Java] 21:43:36.844  INFO --- m.r.p.PracticalJavaApplication           : Starting PracticalJavaApplication using Java 11.0.11 on SP-MBZ3883.local with PID 99944 (/Users/roger.toledo/me/cursos/java/pratical-java/practical-java/build/classes/java/main started by roger.toledo in /Users/roger.toledo/me/cursos/java/pratical-java/practical-java)
+[Practical Java] 21:43:36.860  INFO --- m.r.p.PracticalJavaApplication           : No active profile set, falling back to 1 default profile: "default"
+[Practical Java] 21:43:38.530  INFO --- o.s.b.web.embedded.netty.NettyWebServer  : Netty started on port 8080
+[Practical Java] 21:43:38.541  INFO --- m.r.p.PracticalJavaApplication           : Started PracticalJavaApplication in 2.485 seconds (JVM running for 3.002)
+[Practical Java] 21:45:22.365  INFO --- m.r.p.PracticalJavaApplication           : Starting PracticalJavaApplication using Java 11.0.11 on SP-MBZ3883.local with PID 99966 (/Users/roger.toledo/me/cursos/java/pratical-java/practical-java/build/classes/java/main started by roger.toledo in /Users/roger.toledo/me/cursos/java/pratical-java/practical-java)
+[Practical Java] 21:45:22.369  INFO --- m.r.p.PracticalJavaApplication           : No active profile set, falling back to 1 default profile: "default"
+[Practical Java] 21:45:23.860  INFO --- o.s.b.web.embedded.netty.NettyWebServer  : Netty started on port 8081
+[Practical Java] 21:45:23.868  INFO --- m.r.p.PracticalJavaApplication           : Started PracticalJavaApplication in 2.126 seconds (JVM running for 2.759)
