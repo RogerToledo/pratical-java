@@ -15,7 +15,7 @@ public class DefaultRestApi {
     private Logger logger = LoggerFactory.getLogger(DefaultRestApi.class);
     @RequestMapping(value = "/welcome")
     public String welcome(){
-        logger.info(StringUtils.join("Hello", " this is", "Spring boot", " REST API"));
+        logger.info(StringUtils.join("Hello", " this is", " Spring boot", " REST API"));
         return "Welcome to Spring Boot";
     }
 
