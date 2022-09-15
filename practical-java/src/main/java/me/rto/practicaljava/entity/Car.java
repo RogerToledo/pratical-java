@@ -1,6 +1,7 @@
 package me.rto.practicaljava.entity;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class Car {
 
@@ -10,6 +11,7 @@ public class Car {
     private int price;
     private boolean available;
     private LocalDate firstReleaseDate;
+    private List<String> addicionalFeatures;
     public Car() {
     }
 
@@ -65,6 +67,14 @@ public class Car {
 
     public void setFirstReleaseDate(LocalDate firstReleaseDate) {
         this.firstReleaseDate = firstReleaseDate;
+    }
+
+    public List<String> getAddicionalFeatures() {
+        return addicionalFeatures;
+    }
+
+    public void setAddicionalFeatures(List<String> addicionalFeatures) {
+        this.addicionalFeatures = addicionalFeatures;
     }
 
     @Override
