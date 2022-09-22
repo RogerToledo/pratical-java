@@ -1,17 +1,35 @@
 package me.rto.practicaljava.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import org.elasticsearch.index.engine.Engine;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.elasticsearch.annotations.DateFormat;
+import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
+
 import java.time.LocalDate;
 import java.util.List;
-
+@Document(indexName = "pratical-java")
 public class Car {
-
+    @Id
+    private String id;
     private String brand;
     private String color;
     private String type;
     private int price;
     private boolean available;
+    @Field(type = FieldType.Date, format = DateFormat.date)
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "America/Sao_Paulo")
     private LocalDate firstReleaseDate;
+    @JsonInclude(value = JsonInclude.Include.NON_EMPTY)
     private List<String> addicionalFeatures;
+    private Engine engine;
+    private Tire tire;
+    @JsonInclude(value = JsonInclude.Include.NON_EMPTY)
+    private String secretFeature;
+
     public Car() {
     }
 
@@ -19,6 +37,14 @@ public class Car {
         this.brand = brand;
         this.color = color;
         this.type = type;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getBrand() {
@@ -77,8 +103,43 @@ public class Car {
         this.addicionalFeatures = addicionalFeatures;
     }
 
+    public Engine getEngine() {
+        return engine;
+    }
+
+    public void setEngine(Engine engine) {
+        this.engine = engine;
+    }
+
+    public Tire getTire() {
+        return tire;
+    }
+
+    public void setTire(Tire tire) {
+        this.tire = tire;
+    }
+
+    public String getSecretFeature() {
+        return secretFeature;
+    }
+
+    public void setSecretFeature(String secretFeature) {
+        this.secretFeature = secretFeature;
+    }
+
     @Override
     public String toString() {
-        return String.format("Car[brand=%s, color=%s, type=%s]", brand, color, type);
+        return "Car{" +
+                "brand='" + brand + '\'' +
+                ", color='" + color + '\'' +
+                ", type='" + type + '\'' +
+                ", price=" + price +
+                ", available=" + available +
+                ", firstReleaseDate=" + firstReleaseDate +
+                ", addicionalFeatures=" + addicionalFeatures +
+                ", engine=" + engine +
+                ", tire=" + tire +
+                ", secretFeature='" + secretFeature + '\'' +
+                '}';
     }
 }
