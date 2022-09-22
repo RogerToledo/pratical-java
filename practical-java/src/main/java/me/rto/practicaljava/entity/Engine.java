@@ -4,6 +4,8 @@ public class Engine {
 
     private String fuelType;
     private int powerHorse;
+    private String color;
+    private String serialNumber;
 
     public Engine() {
     }
@@ -27,6 +29,22 @@ public class Engine {
 
     public void setPowerHorse(int powerHorse) {
         this.powerHorse = powerHorse;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public String getSerialNumber() {
+        return serialNumber;
+    }
+
+    public void setSerialNumber(String serialNumber) {
+        this.serialNumber = serialNumber;
     }
 
     @Override
