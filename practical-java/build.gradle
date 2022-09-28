@@ -1,22 +1,31 @@
 plugins {
-	id 'org.springframework.boot' version '2.6.7'
+	id 'org.springframework.boot' version '2.6.9'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
 }
 
 group = 'me.rto'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
+sourceCompatibility = '16'
 
 repositories {
 	mavenCentral()
 }
+configurations {
+	developmentOnly
+	runtimeClasspath {
+		extendsFrom developmentOnly
+	}
+}
+ext{
+	set('apacheCommonsLang3Version', "3.12.0")
+}
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
-	implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.12.0'
-	implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch:2.7.3'
-
+	implementation "org.apache.commons:commons-lang3:${apacheCommonsLang3Version}"
+	implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'io.projectreactor:reactor-test'
 }

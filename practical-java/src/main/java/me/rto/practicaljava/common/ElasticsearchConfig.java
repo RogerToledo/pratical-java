@@ -1,6 +1,5 @@
 package me.rto.practicaljava.common;
 
-import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.elasticsearch.client.ClientConfiguration;
@@ -12,8 +11,9 @@ public class ElasticsearchConfig extends AbstractElasticsearchConfiguration {
 
     @Override
     public RestHighLevelClient elasticsearchClient() {
-        final var clientConfig = ClientConfiguration
-                .builder().connectedTo("localhost:9200").build();
-        return RestClients.create(clientConfig).rest();
+        final var clientConfiguration = ClientConfiguration.builder()
+                .connectedTo("localhost:9200").build();
+
+        return RestClients.create(clientConfiguration).rest();
     }
 }
