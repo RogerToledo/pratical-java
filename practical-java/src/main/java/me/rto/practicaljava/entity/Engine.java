@@ -1,15 +1,18 @@
 package me.rto.practicaljava.entity;
 
 public class Engine {
+
     private String fuelType;
     private int powerHorse;
+    private String color;
+    private String serialNumber;
 
     public Engine() {
     }
 
-    public Engine(String fuelType, int horsePower) {
+    public Engine(String fuelType, int powerHorse) {
         this.fuelType = fuelType;
-        this.powerHorse = horsePower;
+        this.powerHorse = powerHorse;
     }
 
     public String getFuelType() {
@@ -28,11 +31,27 @@ public class Engine {
         this.powerHorse = powerHorse;
     }
 
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public String getSerialNumber() {
+        return serialNumber;
+    }
+
+    public void setSerialNumber(String serialNumber) {
+        this.serialNumber = serialNumber;
+    }
+
     @Override
     public String toString() {
         return "Engine{" +
                 "fuelType='" + fuelType + '\'' +
-                ", horsePower=" + powerHorse +
+                ", powerHorse=" + powerHorse +
                 '}';
     }
 }

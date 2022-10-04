@@ -35,7 +35,7 @@ public class RandomCarService implements CarService {
         engine.setFuelType(fuel);
         engine.setPowerHorse(powerHorse);
 
-        var manufacturer = TIRE_MANUFACTURERS.get(ThreadLocalRandom.current().nextInt(TIRE_MANUFACTURERS.size()));
+        var manufacturer = TIRE_MANUFACTURE.get(ThreadLocalRandom.current().nextInt(TIRE_MANUFACTURE.size()));
         var size = ThreadLocalRandom.current().nextInt(15, 18);
         var tirePrice = ThreadLocalRandom.current().nextInt(200, 400);
 
@@ -44,9 +44,13 @@ public class RandomCarService implements CarService {
         tire.setSize(size);
         tire.setPrice(tirePrice);
 
-        var secretFeature = ThreadLocalRandom.current().nextBoolean() ? "Can fly" : null;
-
-        Car car = new Car(brand, color, type, price, available, firstReleaseDate, secretFeature, addicionalFeature, engine, tire);
+        Car car = new Car(brand, color, type);
+        car.setPrice(price);
+        car.setAvailable(available);
+        car.setFirstReleaseDate(firstReleaseDate);
+        car.setAddicionalFeatures(addicionalFeature);
+        car.setEngine(engine);
+        car.setTire(tire);
 
         return car;
     }
