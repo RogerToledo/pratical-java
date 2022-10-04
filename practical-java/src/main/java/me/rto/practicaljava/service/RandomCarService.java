@@ -1,6 +1,8 @@
 package me.rto.practicaljava.service;
 
 import me.rto.practicaljava.entity.Car;
+import me.rto.practicaljava.entity.Engine;
+import me.rto.practicaljava.entity.Tire;
 import me.rto.practicaljava.util.RandomDateUtil;
 import org.springframework.stereotype.Service;
 
@@ -27,11 +29,24 @@ public class RandomCarService implements CarService {
             addicionalFeature.add(ADDITIONAL_FEATURES.get(i));
         }
 
-        Car car = new Car(brand, color, type);
-        car.setPrice(price);
-        car.setAvailable(available);
-        car.setFirstReleaseDate(firstReleaseDate);
-        car.setAddicionalFeatures(addicionalFeature);
+        var fuel = FUELS.get(ThreadLocalRandom.current().nextInt(FUELS.size()));
+        var powerHorse = ThreadLocalRandom.current().nextInt(100, 220);
+        var engine = new Engine();
+        engine.setFuelType(fuel);
+        engine.setPowerHorse(powerHorse);
+
+        var manufacturer = TIRE_MANUFACTURERS.get(ThreadLocalRandom.current().nextInt(TIRE_MANUFACTURERS.size()));
+        var size = ThreadLocalRandom.current().nextInt(15, 18);
+        var tirePrice = ThreadLocalRandom.current().nextInt(200, 400);
+
+        var tire = new Tire();
+        tire.setManufacturer(manufacturer);
+        tire.setSize(size);
+        tire.setPrice(tirePrice);
+
+        var secretFeature = ThreadLocalRandom.current().nextBoolean() ? "Can fly" : null;
+
+        Car car = new Car(brand, color, type, price, available, firstReleaseDate, secretFeature, addicionalFeature, engine, tire);
 
         return car;
     }
