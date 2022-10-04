@@ -12,6 +12,9 @@ public class Car {
     private boolean available;
     private LocalDate firstReleaseDate;
     private List<String> addicionalFeatures;
+    private Engine engine;
+    private Tire tire;
+
     public Car() {
     }
 
@@ -75,6 +78,22 @@ public class Car {
 
     public void setAddicionalFeatures(List<String> addicionalFeatures) {
         this.addicionalFeatures = addicionalFeatures;
+    }
+
+    public Engine getEngine() {
+        return engine;
+    }
+
+    public void setEngine(Engine engine) {
+        this.engine = engine;
+    }
+
+    public Tire getTire() {
+        return tire;
+    }
+
+    public void setTire(Tire tire) {
+        this.tire = tire;
     }
 
     @Override
