@@ -1,5 +1,6 @@
 package me.rto.practicaljava.common;
 
+import me.rto.practicaljava.api.server.DefaultRestApi;
 import me.rto.practicaljava.entity.Car;
 import me.rto.practicaljava.repository.CarElasticRepository;
 import me.rto.practicaljava.service.CarService;
@@ -12,7 +13,6 @@ import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import java.awt.desktop.SystemSleepListener;
 import java.util.ArrayList;
 
 
@@ -20,6 +20,7 @@ import java.util.ArrayList;
 public class CarElasticDatasource {
 
     private static final Logger LOG = LoggerFactory.getLogger(CarElasticDatasource.class);
+
 
     @Autowired
     private CarElasticRepository carRepository;
