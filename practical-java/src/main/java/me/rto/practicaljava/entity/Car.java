@@ -13,6 +13,7 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @Document(indexName = "practical-java")
@@ -158,5 +159,18 @@ public class Car {
                 ", engine=" + engine +
                 ", tires=" + tires +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Car car = (Car) o;
+        return brand.equals(car.brand) && color.equals(car.color) && type.equals(car.type) && firstRelease.equals(car.firstRelease) && additionalFeatures.equals(car.additionalFeatures);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, brand, color, type, price, available, firstRelease, secretFeature, additionalFeatures, engine, tires);
     }
 }
