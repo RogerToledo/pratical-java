@@ -2,6 +2,7 @@ package me.rto.practicaljava.entity;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 public class Car {
 
@@ -99,5 +100,18 @@ public class Car {
     @Override
     public String toString() {
         return String.format("Car[brand=%s, color=%s, type=%s]", brand, color, type);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Car car = (Car) o;
+        return brand.equals(car.brand) && color.equals(car.color) && type.equals(car.type) && firstRelease.equals(car.firstRelease) && additionalFeatures.equals(car.additionalFeatures);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, brand, color, type, price, available, firstRelease, secretFeature, additionalFeatures, engine, tires);
     }
 }
