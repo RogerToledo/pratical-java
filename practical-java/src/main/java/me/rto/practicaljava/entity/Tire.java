@@ -5,8 +5,7 @@ public class Tire {
     private int size;
     private int price;
 
-    public Tire() {
-    }
+    public Tire() {};
 
     public Tire(String manufacturer, int size, int price) {
         this.manufacturer = manufacturer;
