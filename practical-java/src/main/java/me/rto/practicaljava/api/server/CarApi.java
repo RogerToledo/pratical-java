@@ -1,5 +1,6 @@
 package me.rto.practicaljava.api.server;
 
+import me.rto.practicaljava.Exception.IllegalApiParamException;
 import me.rto.practicaljava.entity.Car;
 import me.rto.practicaljava.repository.CarElasticRepository;
 import me.rto.practicaljava.response.ErrorResponse;
@@ -114,6 +115,10 @@ public class CarApi {
     public List<Car> findCarsByParam(@RequestParam String brand, @RequestParam String color, @RequestParam(defaultValue = "0") int page,
                                      @RequestParam(defaultValue = "10") int size) {
 
+        if (StringUtils.isNumeric(brand)) {
+            throw new IllegalArgumentException("Invalid brand: " + brand);
+        }
+
         if (StringUtils.isNumeric(color)) {
             throw new IllegalArgumentException("Invalid color: " + color);
         }
@@ -127,6 +132,16 @@ public class CarApi {
             @RequestParam(name = "first_release_date")
             @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate firstRelease) {
         return carElasticRepository.findByFirstReleaseAfter(firstRelease);
+    }
+
+    @ExceptionHandler(value = IllegalApiParamException.class)
+    public ResponseEntity<ErrorResponse> handleIllegalApiParamException(IllegalApiParamException e) {
+        var message = "Exception: " + e.getMessage();
+        LOG.warn(message);
+
+        var errorResponse = new ErrorResponse(message, LocalDateTime.now());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
     }
 
     @ExceptionHandler(value = IllegalArgumentException.class)
