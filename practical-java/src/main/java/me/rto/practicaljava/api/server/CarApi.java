@@ -27,7 +27,7 @@ import java.util.concurrent.ThreadLocalRandom;
 @RestController
 public class CarApi {
 
-    private static final Logger logger = LoggerFactory.getLogger(CarApi.class);
+    private static final Logger LOG = LoggerFactory.getLogger(CarApi.class);
 
     @Autowired
     private CarElasticRepository carElasticRepository;
@@ -42,7 +42,7 @@ public class CarApi {
 
     @PostMapping(value = "/echo", consumes = MediaType.APPLICATION_JSON_VALUE)
     public String echo(@RequestBody Car car){
-        logger.info("Car is {}", car);
+        LOG.info("Car is {}", car);
 
         return car.toString();
     }
@@ -113,6 +113,11 @@ public class CarApi {
     @GetMapping(value = "/cars")
     public List<Car> findCarsByParam(@RequestParam String brand, @RequestParam String color, @RequestParam(defaultValue = "0") int page,
                                      @RequestParam(defaultValue = "10") int size) {
+
+        if (StringUtils.isNumeric(color)) {
+            throw new IllegalArgumentException("Invalid color: " + color);
+        }
+
         var pageable = PageRequest.of(page, size);
         return carElasticRepository.findByBrandAndColor(brand, color, pageable).getContent();
     }
@@ -122,5 +127,15 @@ public class CarApi {
             @RequestParam(name = "first_release_date")
             @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate firstRelease) {
         return carElasticRepository.findByFirstReleaseAfter(firstRelease);
+    }
+
+    @ExceptionHandler(value = IllegalArgumentException.class)
+    public ResponseEntity<ErrorResponse> handleInvalidColorException(IllegalArgumentException e) {
+        var message = "Exception: " + e.getMessage();
+        LOG.warn(message);
+
+        var errorResponse = new ErrorResponse(message, LocalDateTime.now());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
     }
 }

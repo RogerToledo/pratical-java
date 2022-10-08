@@ -21,7 +21,6 @@ public class CarElasticDatasource {
 
     private static final Logger LOG = LoggerFactory.getLogger(CarElasticDatasource.class);
 
-
     @Autowired
     private CarElasticRepository carRepository;
 
@@ -46,7 +45,7 @@ public class CarElasticDatasource {
 
         carRepository.saveAll(cars);
 
-        LOG.info("LOG: Saved {} cars.", carRepository.count());
-        System.out.println("Saved " + carRepository.count() + " from " + cars.size());
+        LOG.info("Saved {} cars.", carRepository.count());
+        System.out.println("Out: Saved " + carRepository.count() + " from " + cars.size());
     }
 }
