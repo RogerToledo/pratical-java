@@ -1,18 +1,25 @@
 package me.rto.practicaljava.api.server;
 
+import me.rto.practicaljava.Exception.IllegalApiParamException;
 import me.rto.practicaljava.entity.Car;
 import me.rto.practicaljava.repository.CarElasticRepository;
+import me.rto.practicaljava.response.ErrorResponse;
 import me.rto.practicaljava.service.CarService;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
@@ -21,7 +28,7 @@ import java.util.concurrent.ThreadLocalRandom;
 @RestController
 public class CarApi {
 
-    private static final Logger logger = LoggerFactory.getLogger(CarApi.class);
+    private static final Logger LOG = LoggerFactory.getLogger(CarApi.class);
 
     @Autowired
     private CarElasticRepository carElasticRepository;
@@ -36,7 +43,7 @@ public class CarApi {
 
     @PostMapping(value = "/echo", consumes = MediaType.APPLICATION_JSON_VALUE)
     public String echo(@RequestBody Car car){
-        logger.info("Car is {}", car);
+        LOG.info("Car is {}", car);
 
         return car.toString();
     }
@@ -86,15 +93,36 @@ public class CarApi {
     }
 
     @GetMapping(value = "cars/{brand}/{color}")
-    public List<Car> findByBrandAndColor(@PathVariable String brand, @PathVariable String color, @RequestParam(defaultValue = "0") int page,
-                                         @RequestParam(defaultValue = "10") int size) {
+    public ResponseEntity<Object> findByBrandAndColor(@PathVariable String brand, @PathVariable String color, @RequestParam(defaultValue = "0") int page,
+                                                      @RequestParam(defaultValue = "10") int size) {
+
+        var headers = new HttpHeaders();
+        headers.add(HttpHeaders.SERVER, "Spring");
+        headers.add("X-Custom-Header", "Custom Response Header");
+
+        if (StringUtils.isNumeric(color)) {
+            var errorResponse = new ErrorResponse("Invalid color: " + color, LocalDateTime.now());
+            return new ResponseEntity<Object>(errorResponse, headers, HttpStatus.BAD_REQUEST);
+        }
+
         var pageable = PageRequest.of(page, size);
-        return carElasticRepository.findByBrandAndColor(brand, color, pageable).getContent();
+        var cars = carElasticRepository.findByBrandAndColor(brand, color, pageable).getContent();
+
+        return ResponseEntity.ok().headers(headers).body(cars);
     }
 
     @GetMapping(value = "/cars")
     public List<Car> findCarsByParam(@RequestParam String brand, @RequestParam String color, @RequestParam(defaultValue = "0") int page,
                                      @RequestParam(defaultValue = "10") int size) {
+
+        if (StringUtils.isNumeric(brand)) {
+            throw new IllegalApiParamException("Invalid brand: " + brand);
+        }
+
+        if (StringUtils.isNumeric(color)) {
+            throw new IllegalApiParamException("Invalid color: " + color);
+        }
+
         var pageable = PageRequest.of(page, size);
         return carElasticRepository.findByBrandAndColor(brand, color, pageable).getContent();
     }
