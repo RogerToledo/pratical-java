@@ -116,11 +116,11 @@ public class CarApi {
                                      @RequestParam(defaultValue = "10") int size) {
 
         if (StringUtils.isNumeric(brand)) {
-            throw new IllegalArgumentException("Invalid brand: " + brand);
+            throw new IllegalApiParamException("Invalid brand: " + brand);
         }
 
         if (StringUtils.isNumeric(color)) {
-            throw new IllegalArgumentException("Invalid color: " + color);
+            throw new IllegalApiParamException("Invalid color: " + color);
         }
 
         var pageable = PageRequest.of(page, size);
@@ -132,25 +132,5 @@ public class CarApi {
             @RequestParam(name = "first_release_date")
             @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate firstRelease) {
         return carElasticRepository.findByFirstReleaseAfter(firstRelease);
-    }
-
-    @ExceptionHandler(value = IllegalApiParamException.class)
-    public ResponseEntity<ErrorResponse> handleIllegalApiParamException(IllegalApiParamException e) {
-        var message = "Exception: " + e.getMessage();
-        LOG.warn(message);
-
-        var errorResponse = new ErrorResponse(message, LocalDateTime.now());
-
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
-    }
-
-    @ExceptionHandler(value = IllegalArgumentException.class)
-    public ResponseEntity<ErrorResponse> handleInvalidColorException(IllegalArgumentException e) {
-        var message = "Exception: " + e.getMessage();
-        LOG.warn(message);
-
-        var errorResponse = new ErrorResponse(message, LocalDateTime.now());
-
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
     }
 }
